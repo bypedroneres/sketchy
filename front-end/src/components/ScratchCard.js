@@ -128,7 +128,7 @@ export default function ScratchCardScreen({
 
         {/* Buttons under scratch card */}
         <div className="MakingOutScreen_Buttons">
-          <NavLink to="/making-out" className="Scratch_Button">
+          <NavLink to="/sex" className="Scratch_Button">
           Realizar
           </NavLink>
           <NavLink to="/dices" className="Dices_Button">

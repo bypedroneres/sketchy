@@ -1,0 +1,77 @@
+.MakingOutScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--primary-black);
+}
+
+.MakingOutScreen_Content {
+    text-align: center;
+    color: var(--primary-white);
+    padding: 2rem;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.MakingOutScreen_Content > p {
+    display: flex;
+    position: fixed;
+    top: 3rem;
+}
+
+.MakingOutScreen_Buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  position: fixed;
+  bottom: 6rem;
+  gap: 20px;
+}
+
+.Scratch_Button {
+    background-color: var(--primary-black);
+    color: var(--primary-white);
+    border: 1px solid var(--primary-white);
+    padding: 1rem;
+    width: 30%;
+    border-radius: 3rem;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+.Dices_Button {
+    background-color: var(--primary-white);
+    color: var(--primary-black);
+    border: 1px solid var(--primary-white);
+    padding: 1rem;
+    border-radius: 3rem;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+.MakingOut_Icon {
+    width: 280px;
+    height: 280px;
+    animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(0.8);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.15);
+        opacity: 0.85;
+    }
+}

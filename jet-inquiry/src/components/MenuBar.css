@@ -1,0 +1,11 @@
+.MenuBar_Icon {
+    width: 4rem;
+    height: 4rem;
+}
+
+.MenuBar {
+    display: flex;
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+}

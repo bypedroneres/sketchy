@@ -1,0 +1,27 @@
+/* TrialCountdown.css */
+
+.trial-countdown {
+  background: rgba(255, 255, 255, 0.05); /* subtle overlay */
+  color: #ff0000;
+  text-align: center;
+  padding: 1rem 2rem;
+  margin: 1rem auto;
+  border-radius: 1rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.5px;
+  width: fit-content;
+  max-width: 90%;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease-in-out;
+}
+
+.trial-countdown p {
+  margin: 0;
+}
+
+.trial-countdown.expired {
+  background: rgba(255, 50, 50, 0.1); /* red overlay for expired */
+  color: #ff3232;
+  box-shadow: 0 0 15px rgba(255, 50, 50, 0.5);
+}

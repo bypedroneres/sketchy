@@ -1,0 +1,68 @@
+.Home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--secondary-black);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+}
+
+.Home_Content {
+    display: flex;
+    width: 80%;
+    height: 90%;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.Home_Text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.Home_Text h1 {
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 4rem;
+    text-align: left;
+    font-weight: 500;
+}
+
+.Home_Buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.Join_Button {
+    background-color: var(--primary-black);
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    border: 1px solid var(--primary-white);
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.Sign_Button {
+    background-color: var(--primary-white);
+    color: black;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+    text-decoration: none;
+}

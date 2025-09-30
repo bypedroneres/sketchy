@@ -1,0 +1,29 @@
+.Navbar {
+  display: flex;
+  justify-content: space-around;
+  background-color: var(--primary-black);
+  position: fixed;
+  bottom: calc(env(safe-area-inset-bottom, 0) + 1rem);
+  left: calc(env(safe-area-inset-left, 0));
+  right: calc(env(safe-area-inset-right, 0));
+  padding: 1rem;
+  box-shadow: #44444418 0px 0px 5px 3px;
+  margin: 0 auto;
+  z-index: 1000;
+}
+
+
+/* Remove hover effect */
+.nav-link:hover {
+  color: gray; /* or no change */
+}
+
+/* Active link SVG fill to black */
+.nav-link.active svg {
+  fill: var(--primary-white);
+}
+
+/* Default SVG fill to gray */
+.nav-link svg {
+  fill: gray;
+}

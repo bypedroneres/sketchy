@@ -1,0 +1,10 @@
+.Dashboard {
+    padding: 2rem;
+    background-color: var(--primary-black);
+    height: 100vh;
+    color: var(--primary-white);
+}
+
+.Dashboard_Content {
+    padding-top: 6rem;
+}

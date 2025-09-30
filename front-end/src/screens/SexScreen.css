@@ -1,0 +1,49 @@
+.SexScreen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #0c0c0c;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.SexScreen_Content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.SexScreen_Buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.SexScreen_Button {
+  padding: 1rem 2rem;
+  background-color: #e91e63;
+  border-radius: 25px;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+  text-decoration: none;
+}
+
+.SexScreen_Button:hover {
+  background-color: #ff4081;
+}
+
+.SexScreen h2 {
+  font-size: 2rem;
+}
+
+.SexScreen p {
+  font-size: 1.2rem;
+  color: #ccc;
+}

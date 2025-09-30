@@ -10,6 +10,7 @@ import Dashboard from "./screens/Dashboard";
 import PrivateRoute from "./routes/PrivateRoute";
 import HomeScreen from "./screens/HomeScreen";
 import NotificationsScreen from "./screens/NotificationScreen";
+import SexScreen from "./screens/SexScreen";
 
 import { auth } from "./firebase";
 import './styles/global.css';
@@ -58,6 +59,7 @@ function App() {
         <Route path="/wheel" element={<SexWheelScreen />} />
         <Route path="/sync/:inviterId" element={<SyncPage />} />
         <Route path="/notifications" element={<NotificationsScreen />} />
+        <Route path ="sex" element={<SexScreen />} />
 
         {/* Dashboard protected */}
         <Route

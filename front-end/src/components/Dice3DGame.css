@@ -4,7 +4,7 @@
 .dice-container {
   width: 100%;
   height: 100vh;
-  background: #000;
+  background: var(--primary-black);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -114,3 +114,5 @@
    (We can work on this together)
 ---------------------------------*/
 /* Example animation: add here later */
+
+

@@ -12,9 +12,9 @@ function Games() {
             <NavLink to="/dices" className='Game_Card'>
                 <h2>Dados que mandam</h2>
             </NavLink>
-            <NavLink to="/wheel" className='Game_Card'>
+            {/* <NavLink to="/wheel" className='Game_Card'>
                 <h2>Roleta da Putaria</h2>
-            </NavLink>
+            </NavLink> */}
         </div>
       
     </div>

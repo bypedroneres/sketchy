@@ -1,29 +1,38 @@
 .Navbar {
   display: flex;
   justify-content: space-around;
-  background-color: var(--primary-black);
+  align-items: center;
   position: fixed;
-  bottom: calc(env(safe-area-inset-bottom, 0) + 1rem);
-  left: calc(env(safe-area-inset-left, 0));
-  right: calc(env(safe-area-inset-right, 0));
+  bottom: 0;
+  left: 0;
+  right: 0;
   padding: 1rem;
-  box-shadow: #44444418 0px 0px 5px 3px;
-  margin: 0 auto;
+  background-color: var(--primary-black);
   z-index: 1000;
 }
 
+/* Individual links */
+.nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
 
-/* Remove hover effect */
+/* Hover effect: subtle scale */
 .nav-link:hover {
-  color: gray; /* or no change */
+  transform: scale(1.2);
 }
 
-/* Active link SVG fill to black */
+/* Active icon */
 .nav-link.active svg {
-  fill: var(--primary-white);
+  stroke: #fff; /* active icon white */
 }
 
-/* Default SVG fill to gray */
+/* Inactive icon */
 .nav-link svg {
-  fill: gray;
+  stroke: #888; /* gray for inactive */
+  transition: stroke 0.3s ease, transform 0.2s ease;
 }

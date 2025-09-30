@@ -9,6 +9,7 @@ import SignUpScreen from "./screens/SignUpScreen";
 import Dashboard from "./screens/Dashboard";
 import PrivateRoute from "./routes/PrivateRoute";
 import HomeScreen from "./screens/HomeScreen";
+import NotificationsScreen from "./screens/NotificationScreen";
 
 import { auth } from "./firebase";
 import './styles/global.css';
@@ -56,6 +57,7 @@ function App() {
         <Route path="/scratch" element={<ScratchScreen />} />
         <Route path="/wheel" element={<SexWheelScreen />} />
         <Route path="/sync/:inviterId" element={<SyncPage />} />
+        <Route path="/notifications" element={<NotificationsScreen />} />
 
         {/* Dashboard protected */}
         <Route

@@ -1,19 +1,22 @@
 import React, { useRef, useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import "../components/ScratchCard.css";
+import MenuBar from "./MenuBar";
 
-export default function ScratchCard({
+export default function ScratchCardScreen({
   coverImage,
   revealImage,
   width = 300,
-  height = 200,
+  height = 300,
   revealThreshold = 0.6,
-  coverScale = 1.2, // scale factor for bigger cover image
 }) {
   const canvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [lastPoint, setLastPoint] = useState(null);
   const [finished, setFinished] = useState(false);
+  const [fadeOut, setFadeOut] = useState(false);
 
+  // Initialize canvas
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -28,17 +31,12 @@ export default function ScratchCard({
     const img = new Image();
     img.src = coverImage;
     img.onload = () => {
-      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = "#0c0c0c";
+      ctx.fillRect(0, 0, width, height);
 
-      // Draw bigger than canvas for extra coverage
-      const w = width * coverScale;
-      const h = height * coverScale;
-      const x = (width - w) / 2;
-      const y = (height - h) / 2;
-
-      ctx.drawImage(img, x, y, w, h);
+      ctx.drawImage(img, 0, 0, width, height);
     };
-  }, [coverImage, width, height, coverScale]);
+  }, [coverImage, width, height]);
 
   const getPos = (e) => {
     const rect = canvasRef.current.getBoundingClientRect();
@@ -69,8 +67,7 @@ export default function ScratchCard({
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
     ctx.strokeStyle = "rgba(0,0,0,1)";
-    const isMobile = window.innerWidth < 768;
-    ctx.lineWidth = isMobile ? 60 : 30;
+    ctx.lineWidth = window.innerWidth < 768 ? 60 : 30;
 
     if (lastPoint) {
       ctx.beginPath();
@@ -93,29 +90,52 @@ export default function ScratchCard({
     }
 
     const ratio = cleared / (width * height);
-    if (ratio > revealThreshold) setFinished(true);
+    if (ratio > revealThreshold) {
+      setFinished(true);
+      setTimeout(() => setFadeOut(true), 50);
+    }
   };
 
   return (
-    <div className="scratch-card-container" style={{ width, height }}>
-      <img src={revealImage} alt="Revealed" className="reveal-image" />
+    <div className="ScratchScreen">
+      <div className="ScratchScreen_Content">
 
-      <canvas
-        ref={canvasRef}
-        width={width}
-        height={height}
-        className={`scratch-canvas ${finished ? "finished" : ""}`}
-        onMouseDown={startScratch}
-        onMouseUp={stopScratch}
-        onMouseMove={scratch}
-        onMouseLeave={stopScratch}
-        onTouchStart={startScratch}
-        onTouchEnd={stopScratch}
-        onTouchMove={scratch}
-      />
 
-      <div className={`scratch-card-message ${finished ? "show" : ""}`}>
-        aproveite o momento
+        {/* Scratch card container */}
+        <div className="ScratchCard_Container">
+          {/* Reveal image behind canvas */}
+          <img
+            src={revealImage}
+            alt="Revealed"
+            className="reveal-image"
+            style={{ width: `${width}px`, height: `${height}px` }}
+          />
+
+          <canvas
+            ref={canvasRef}
+            width={width}
+            height={height}
+            className={`scratch-canvas ${fadeOut ? "fade-out" : ""}`}
+            onMouseDown={startScratch}
+            onMouseUp={stopScratch}
+            onMouseMove={scratch}
+            onMouseLeave={stopScratch}
+            onTouchStart={startScratch}
+            onTouchEnd={stopScratch}
+            onTouchMove={scratch}
+          />
+        </div>
+
+        {/* Buttons under scratch card */}
+        <div className="MakingOutScreen_Buttons">
+          <NavLink to="/making-out" className="Scratch_Button">
+          Realizar
+          </NavLink>
+          <NavLink to="/dices" className="Dices_Button">
+            Jogar os dados
+          </NavLink>
+        </div>
+        <MenuBar />
       </div>
     </div>
   );

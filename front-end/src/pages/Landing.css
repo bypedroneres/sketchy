@@ -7,7 +7,7 @@
   overflow-x: hidden;      /* allow vertical scroll INSIDE this div */
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif;
-  background-color: #000;   /* your black bg */
+  background-color: var(--primary-black);   /* your black bg */
   color: #fff;
   -webkit-overflow-scrolling: touch; /* smooth on iOS */
 }

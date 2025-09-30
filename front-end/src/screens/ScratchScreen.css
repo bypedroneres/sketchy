@@ -5,3 +5,41 @@
     height: 100vh;
     background-color:var(--primary-black);
 }
+
+.ScratchScreen_Content {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.ScratchCard_Container {
+  position: fixed;
+  overflow: hidden;
+  width: 300px;
+    height: 300px;
+  user-select: none;
+}
+
+.reveal-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.scratch-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  z-index: 1;
+  transition: opacity 0.8s ease;
+}
+
+.scratch-canvas.fade-out {
+  opacity: 0;
+}

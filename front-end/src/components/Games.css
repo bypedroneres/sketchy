@@ -2,7 +2,6 @@
     display: flex;
     width: 100%;
     padding: 2rem;
-    background-color: red;
 }
 
 .Games_Content {
@@ -15,7 +14,7 @@
 }
 
 .Game_Card {
-    color: black;
+    color: var(--primary-black);
     width: 100%;
     border: 1px solid #ccc;
     flex-direction: column;

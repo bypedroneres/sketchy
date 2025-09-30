@@ -1,16 +1,16 @@
-/* Container for the whole wheel section */
+/* Container for the wheel */
 .wheel-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: 'Montserrat', sans-serif;
   height: 100vh;
+  font-family: 'Montserrat', sans-serif;
   background-color: #111;
   color: #fff;
 }
 
-/* Wrapper for the wheel and indicator */
+/* Wheel wrapper */
 .wheel-wrapper {
   position: relative;
   width: 300px;
@@ -18,49 +18,67 @@
   margin-bottom: 20px;
 }
 
-/* The spinning wheel itself */
+/* The wheel itself */
 .wheel {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  border: 8px solid #fff;
+  border: 6px solid #fff;
   position: relative;
   transition: transform 4s cubic-bezier(0.33, 1, 0.68, 1);
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
   overflow: hidden;
+  box-shadow: 0 0 15px rgba(255,255,255,0.2);
 }
 
-/* Each segment of the wheel */
-.wheel-segment {
+/* Each slice of the wheel */
+.wheel-slice {
   position: absolute;
   width: 50%;
   height: 50%;
   top: 50%;
   left: 50%;
   transform-origin: 0% 0%;
-  background: rgba(255, 255, 255, 0.1);
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
-  padding: 10px;
+  padding-left: 10px;
   box-sizing: border-box;
+  background-color: rgba(255,255,255,0.05);
+  border-left: 1px solid rgba(255,255,255,0.2);
+  border-bottom: 1px solid rgba(255,255,255,0.2);
 }
 
-.wheel-segment span {
-  transform: rotate(-45deg);
-  display: block;
-  font-size: 1.5rem;
-  text-align: left;
+/* Slice label */
+.wheel-slice span {
+  transform-origin: 0 0;
+  font-size: 1rem;
+  white-space: nowrap;
 }
 
-/* Pointer/indicator at top */
-.wheel-indicator {
+/* Pointer indicator */
+.wheel-pointer {
   position: absolute;
   top: -20px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 24px;
-  color: red;
+  color: #e91e63;
+}
+
+/* Spin button */
+.spin-button {
+  padding: 10px 20px;
+  background-color: #e91e63;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.spin-button:hover {
+  background-color: #ff4081;
 }
 
 /* Result text */
@@ -70,18 +88,37 @@
   font-weight: bold;
 }
 
-/* Spin button */
-.wheel-button {
-  padding: 10px 20px;
-  background-color: #e91e63;
-  border: none;
-  border-radius: 25px;
-  color: #fff;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background 0.3s;
+
+/* Wheel slice now covers half the wheel correctly */
+.wheel-slice {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transform-origin: 50% 50%; /* rotate around center */
+  clip-path: polygon(50% 50%, 100% 0, 100% 100%); /* slice shape */
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 }
 
-.wheel-button:hover {
-  background-color: #ff4081;
+.wheel-slice span {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1rem;
+  color: #fff;
+}
+
+/* Pointer inside the container */
+.wheel-pointer {
+  position: absolute;
+  top: 0; /* align with top of wheel */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  color: #e91e63;
+  z-index: 2;
 }

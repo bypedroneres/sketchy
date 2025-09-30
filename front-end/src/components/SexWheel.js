@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./SexWheel.css";
 
-const actions = [
+const slices = [
   "Action 1",
   "Action 2",
   "Action 3",
@@ -12,28 +12,28 @@ const actions = [
   "Action 8"
 ];
 
-export default function SexWheel() {
+export default function Wheel() {
   const [rotation, setRotation] = useState(0);
   const [spinning, setSpinning] = useState(false);
   const [result, setResult] = useState(null);
 
-  const spinWheel = () => {
+  const spin = () => {
     if (spinning) return;
     setSpinning(true);
     setResult(null);
 
-    const spins = 360 * (3 + Math.floor(Math.random() * 3));
-    const randomOffset = Math.floor(Math.random() * 360);
-    const totalRotation = rotation + spins + randomOffset;
+    const spins = 360 * (3 + Math.floor(Math.random() * 3)); // 3–5 full spins
+    const offset = Math.floor(Math.random() * 360); // random extra rotation
+    const totalRotation = rotation + spins + offset;
     setRotation(totalRotation);
 
-    const segments = actions.length;
-    const degreesPerSegment = 360 / segments;
-    const finalAngle = totalRotation % 360;
-    const selectedIndex = Math.floor((segments - finalAngle / degreesPerSegment) % segments);
+    const sliceCount = slices.length;
+    const degreesPerSlice = 360 / sliceCount;
+    const finalAngle = (360 - (totalRotation % 360)) % 360;
+    const selectedIndex = Math.floor(finalAngle / degreesPerSlice);
 
     setTimeout(() => {
-      setResult(actions[selectedIndex]);
+      setResult(slices[selectedIndex]);
       setSpinning(false);
     }, 4000);
   };
@@ -41,16 +41,13 @@ export default function SexWheel() {
   return (
     <div className="wheel-container">
       <div className="wheel-wrapper">
-        <div
-          className={`wheel ${spinning ? "spinning" : ""}`}
-          style={{ transform: `rotate(${rotation}deg)` }}
-        >
-          {actions.map((label, i) => {
-            const rotate = (360 / actions.length) * i;
+        <div className="wheel" style={{ transform: `rotate(${rotation}deg)` }}>
+          {slices.map((label, i) => {
+            const rotate = (360 / slices.length) * i;
             return (
               <div
                 key={i}
-                className="wheel-segment"
+                className="wheel-slice"
                 style={{ transform: `rotate(${rotate}deg)` }}
               >
                 <span>{label}</span>
@@ -58,20 +55,14 @@ export default function SexWheel() {
             );
           })}
         </div>
-        <div className="wheel-indicator">▼</div>
+        <div className="wheel-pointer">▼</div>
       </div>
 
-      {result && (
-        <div className="spin-result" style={{ zIndex: 1 }}>
-          🎯 Result: <span>{result}</span>
-        </div>
-      )}
+      {result && <div className="spin-result">🎯 Result: {result}</div>}
 
-      <div className="buttons-container">
-        <button className="wheel-button" onClick={spinWheel}>
-          {spinning ? "Spinning..." : "Spin"}
-        </button>
-      </div>
+      <button className="spin-button" onClick={spin}>
+        {spinning ? "Spinning..." : "Spin"}
+      </button>
     </div>
   );
 }

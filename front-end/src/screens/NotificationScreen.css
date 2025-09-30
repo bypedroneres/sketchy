@@ -1,0 +1,54 @@
+.NotificationsScreen {
+  padding: 2rem 1rem 5rem; /* bottom padding for navbar */
+  min-height: 100vh;
+  background-color: #111;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.notification-section {
+  margin-bottom: 2rem;
+}
+
+.notification-section h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #f1f1f1;
+}
+
+.notification-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notification-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid #333;
+  font-size: 0.95rem;
+}
+
+.notification-item .rank {
+  width: 2rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.notification-item .user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin-right: 0.75rem;
+}
+
+.notification-item .user-name {
+  flex: 1;
+}
+
+.notification-item .user-score,
+.notification-item .combo-count {
+  font-weight: bold;
+}

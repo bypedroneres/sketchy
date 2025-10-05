@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import "./Dice3DGame.css";
 import { NavLink } from "react-router-dom";
 import MenuBar from "./MenuBar";
+import Rules from "./Rules";
 
 // Lados dos dados para o jogo
 const acoes = [
@@ -93,6 +94,13 @@ export default function Dice3DGame() {
   return (
     <div className="dice-container">
       <MenuBar />
+          <Rules
+            gameName="Raspe e realize"
+            rulesText={`1. O primeiro dado representa a ação a ser realizada.
+2. O segundo dado representa a parte do corpo onde a ação deve ocorrer.
+3. Role os dados e siga a combinação que aparecer.
+4. Divirta-se e lembre-se de respeitar o parceiro!`}
+          />
 
       <div className="dice-wrapper" onClick={rollDice}>
         {/* Dado da ação */}

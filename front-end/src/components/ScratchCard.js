@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "../components/ScratchCard.css";
+import Rules from "./Rules";
 import MenuBar from "./MenuBar";
 import { Heart } from "lucide-react";
 import { getFirestore, doc, updateDoc, arrayUnion, collection, getDocs } from "firebase/firestore";
@@ -161,6 +162,12 @@ useEffect(() => {
   return (
     <div className="ScratchScreen">
       <div className="ScratchScreen_Content">
+          <Rules
+            gameName="Raspe e realize"
+            rulesText={`1. Raspe com o dedo.
+          2. Revele a posição escondida.
+          3. Faça a posição com o seu parceiro (a)`}
+          />
         <div className="ScratchCard_Container">
           {revealImage && (
             <img

@@ -4,27 +4,20 @@ import './SexScreen.css';
 
 export default function SexScreen() {
 
-  const handleVibrate = () => {
-    if (navigator.vibrate) {
-      // Example pattern: vibrate 200ms, pause 100ms, vibrate 300ms
-      navigator.vibrate([200, 100, 300, 100, 200]);
-    }
-  };
-
   return (
     <div className="SexScreen">
-      <div className="SexScreen_Content">
-        <h2>Aproveite o momento...</h2>
-        <p>Escolha seu próximo movimento</p>
-
-        <div className="SexScreen_Buttons">
-          <NavLink to="/scratch" className="SexScreen_Button">
-            Nova posição
-          </NavLink>
-          <button onClick={handleVibrate} className="SexScreen_Button">
-            Vibrador
-          </button>
-        </div>
+      <div className='MakingOutScreen_Content'>
+        <p>Aproveite o momento ...</p>
+            <img 
+            src="/images/aura.png" 
+            alt="Logo" 
+            className="MakingOut_Icon" 
+            style={{ width: '280px', height: '280px' }}
+          />
+      <div className='MakingOutScreen_Buttons'>
+        <NavLink to='/scratch' className="Scratch_Button">Trocar de posicao</NavLink>
+        <NavLink to='/dices' className="Dices_Button">Jogar os dados</NavLink>
+      </div>
       </div>
     </div>
   );

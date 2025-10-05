@@ -19,6 +19,7 @@
     border: 1px solid #ccc;
     flex-direction: column;
     align-items: center;
+    text-decoration: none;
     justify-content: center;
     background-color: var(--primary-white);
 }

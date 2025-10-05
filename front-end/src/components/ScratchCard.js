@@ -2,10 +2,12 @@ import React, { useRef, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "../components/ScratchCard.css";
 import MenuBar from "./MenuBar";
+import { Heart } from "lucide-react";
+import { getFirestore, doc, updateDoc, arrayUnion, collection, getDocs } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 export default function ScratchCardScreen({
   coverImage,
-  revealImage,
   width = 300,
   height = 300,
   revealThreshold = 0.6,
@@ -16,7 +18,44 @@ export default function ScratchCardScreen({
   const [finished, setFinished] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
 
-  // Initialize canvas
+  const [revealImage, setRevealImage] = useState(null);
+
+  // 🔥 Fetch random image from Firestore
+useEffect(() => {
+  const fetchRandomImage = async () => {
+    try {
+      const db = getFirestore();
+      const snapshot = await getDocs(collection(db, "positions"));
+
+      if (!snapshot.empty) {
+        // Collect all imageUrls into an array
+        const urls = snapshot.docs
+          .map((doc) => doc.data().imageUrl)
+          .filter((url) => url); // remove undefined/null
+
+        if (urls.length > 0) {
+          // Pick one at random
+          const randomIndex = Math.floor(Math.random() * urls.length);
+          setRevealImage(urls[randomIndex]);
+        } else {
+          console.warn("No imageUrl fields found in positions docs");
+          setRevealImage(null);
+        }
+      } else {
+        console.warn("No documents found in positions collection");
+        setRevealImage(null);
+      }
+    } catch (err) {
+      console.error("Error fetching positions:", err);
+      setRevealImage(null);
+    }
+  };
+
+  fetchRandomImage();
+}, []);
+
+
+  // Initialize canvas (same as before)
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -33,11 +72,11 @@ export default function ScratchCardScreen({
     img.onload = () => {
       ctx.fillStyle = "#0c0c0c";
       ctx.fillRect(0, 0, width, height);
-
       ctx.drawImage(img, 0, 0, width, height);
     };
   }, [coverImage, width, height]);
 
+  // Scratch functions stay the same
   const getPos = (e) => {
     const rect = canvasRef.current.getBoundingClientRect();
     const client = e.touches ? e.touches[0] : e;
@@ -96,20 +135,41 @@ export default function ScratchCardScreen({
     }
   };
 
+  // 🔥 Add to favorites in Firebase
+  const addToFavorites = async () => {
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      if (!user) {
+        alert("Você precisa estar logado para salvar favoritos.");
+        return;
+      }
+
+      const db = getFirestore();
+      const userDoc = doc(db, "users", user.uid);
+
+      await updateDoc(userDoc, {
+        favoritePositions: arrayUnion(revealImage),
+      });
+
+      alert("Adicionado aos favoritos!");
+    } catch (error) {
+      console.error("Erro ao salvar favorito:", error);
+    }
+  };
+
   return (
     <div className="ScratchScreen">
       <div className="ScratchScreen_Content">
-
-
-        {/* Scratch card container */}
         <div className="ScratchCard_Container">
-          {/* Reveal image behind canvas */}
-          <img
-            src={revealImage}
-            alt="Revealed"
-            className="reveal-image"
-            style={{ width: `${width}px`, height: `${height}px` }}
-          />
+          {revealImage && (
+            <img
+              src={revealImage}
+              alt="Revealed"
+              className="reveal-image"
+              style={{ width: `${width}px`, height: `${height}px` }}
+            />
+          )}
 
           <canvas
             ref={canvasRef}
@@ -126,14 +186,16 @@ export default function ScratchCardScreen({
           />
         </div>
 
-        {/* Buttons under scratch card */}
-        <div className="MakingOutScreen_Buttons">
+        <div className="Scratch_Buttons">
           <NavLink to="/sex" className="Scratch_Button">
-          Realizar
+            Realizar
           </NavLink>
           <NavLink to="/dices" className="Dices_Button">
             Jogar os dados
           </NavLink>
+          <div className="Fav_Button" onClick={addToFavorites}>
+            <Heart size={20} />
+          </div>
         </div>
         <MenuBar />
       </div>

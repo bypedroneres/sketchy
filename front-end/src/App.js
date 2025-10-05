@@ -59,7 +59,7 @@ function App() {
         <Route path="/wheel" element={<SexWheelScreen />} />
         <Route path="/sync/:inviterId" element={<SyncPage />} />
         <Route path="/notifications" element={<NotificationsScreen />} />
-        <Route path ="sex" element={<SexScreen />} />
+        <Route path ="/sex" element={<SexScreen />} />
 
         {/* Dashboard protected */}
         <Route

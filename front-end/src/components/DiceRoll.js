@@ -10,7 +10,7 @@ const acoes = [
   "Tocar suavemente",
   "Lamber",
   "Massagear",
-  "Cócegas delicadas",
+  "foder",
   "Morder levemente"
 ];
 
@@ -22,7 +22,6 @@ const partes = [
   "Mãos",
   "Costas"
 ];
-
 
 export default function Dice3DGame() {
   const [rollResult, setRollResult] = useState({ acao: 0, parte: 0 });

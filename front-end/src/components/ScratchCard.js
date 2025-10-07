@@ -168,31 +168,63 @@ useEffect(() => {
           2. Revele a posição escondida.
           3. Faça a posição com o seu parceiro (a)`}
           />
-        <div className="ScratchCard_Container">
-          {revealImage && (
-            <img
-              src={revealImage}
-              alt="Revealed"
-              className="reveal-image"
-              style={{ width: `${width}px`, height: `${height}px` }}
-            />
-          )}
+<div className="ScratchCard_Container" style={{ position: "relative" }}>
+  {revealImage && (
+    <>
+      {/* Stronger black radial gradient */}
+      <div
+        style={{
+          width: `${width}px`,
+          height: `${height}px`,
+          position: "absolute",
+          top: 0,
+          left: 0,
+          borderRadius: "50%",
+          background: `radial-gradient(circle, white 10%, black 80%, black 90%, black 100%)`,
+          zIndex: 0,
+          effects: "blur(20px)",
+          pointerEvents: "none",
+        }}
+      />
 
-          <canvas
-            ref={canvasRef}
-            width={width}
-            height={height}
-            className={`scratch-canvas ${fadeOut ? "fade-out" : ""}`}
-            onMouseDown={startScratch}
-            onMouseUp={stopScratch}
-            onMouseMove={scratch}
-            onMouseLeave={stopScratch}
-            onTouchStart={startScratch}
-            onTouchEnd={stopScratch}
-            onTouchMove={scratch}
-          />
-        </div>
+      {/* Revealed image */}
+      <img
+        src={revealImage}
+        alt="Revealed"
+        className="reveal-image"
+        style={{
+          width: `${width}px`,
+          height: `${height}px`,
+          position: "absolute",
+          top: 0,
+          left: 0,
+          borderRadius: "50%",
+          zIndex: 1,
+          objectFit: "cover",
+          clipPath: "circle(50% at 50% 50%)",
+        }}
+      />
+    </>
+  )}
 
+  {/* Scratch canvas */}
+  <canvas
+    ref={canvasRef}
+    width={width}
+    height={height}
+    className={`scratch-canvas ${fadeOut ? "fade-out" : ""}`}
+    onMouseDown={startScratch}
+    onMouseUp={stopScratch}
+    onMouseMove={scratch}
+    onMouseLeave={stopScratch}
+    onTouchStart={startScratch}
+    onTouchEnd={stopScratch}
+    onTouchMove={scratch}
+    style={{ zIndex: 2, borderRadius: "50%" }}
+  />
+</div>
+
+            
         <div className="Scratch_Buttons">
           <NavLink to="/sex" className="Scratch_Button">
             Realizar

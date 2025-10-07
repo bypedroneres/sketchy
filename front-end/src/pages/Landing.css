@@ -11,113 +11,268 @@
   color: #fff;
   -webkit-overflow-scrolling: touch; /* smooth on iOS */
 }
+/* === Global Layout === */
+.landing-container {
+  background: #0e0e0e;
+  color: #fff;
+  overflow-x: hidden;
+}
 
-/* Top bar */
+/* === Topbar === */
 .landing-topbar {
   display: flex;
-  gap: 1rem;
-  padding: 2rem;
-  position: fixed;
   align-items: center;
-  background-color: var(--primary-black);
+  padding: 1rem 2rem;
+  background: #141414;
+  position: fixed;
+  top: 0;
   width: 100%;
-  z-index: 100;
+  z-index: 10;
 }
 
-.logo {
-  font-weight: 500;
+.landing-topbar .logo {
   font-size: 1.5rem;
-  color: #fff; /* Ensure logo is white */
+  font-weight: 700;
+  margin-left: 0.5rem;
 }
 
-.download-app-btn {
-  background: #fff; /* White button */
-  color: #000;      /* Black text */
-  padding: 10px 20px;
-  border-radius: 30px;
-  border: none;
-  cursor: pointer;
-}
-
-/* Hero */
+/* === Hero Section === */
 .hero-section {
-  position: relative;
   display: flex;
-  padding: 2rem;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  padding-top: 8rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-bottom: 5rem;
   text-align: center;
-  margin-top: 8rem;
+  background: linear-gradient(180deg, #141414, #0e0e0e 80%);
+  position: relative;
 }
 
 .small-text {
   font-size: 0.9rem;
-  color: rgb(211, 211, 211);
-  background-color: #575757;
-  padding: 2px 6px;
-  border-radius: 12px;
+  color: #ff6b81;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
 }
 
 .hero-title {
-  font-size: 3rem;
-  margin-bottom: 20px;
-  color: #fff; /* Ensure title is white */
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  color: #fff;
 }
 
 .hero-subtext {
-  font-size: 1.2rem;
-  margin-bottom: 30px;
-  color: #eee; /* Light text for readability */
+  max-width: 500px;
+  font-size: 1rem;
+  color: #ccc;
+  margin-bottom: 2rem;
 }
 
-.download-buttons {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  flex-wrap: wrap;
+.hero-image img {
+  width: 260px;
+  margin-top: 1.5rem;
+  filter: drop-shadow(0 0 10px rgba(255, 0, 102, 0.3));
 }
 
-.appstore-btn, .playstore-btn {
-  background: #fff; /* White buttons */
-  color: #000;      /* Black text */
-  padding: 12px 25px;
-  border-radius: 30px;
-  border: none;
-  cursor: pointer;
+.cta-button {
+  background: linear-gradient(90deg, #ff3366, #ff0048);
+  color: #fff;
+  padding: 0.9rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 0 15px rgba(255, 51, 102, 0.4);
+  transition: all 0.3s ease;
 }
 
-/* Phone mockup */
-.hero-image {
-  margin-top: 40px;
+.cta-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(255, 51, 102, 0.6);
+}
+
+.cta-button.big {
+  font-size: 1.1rem;
+  padding: 1.1rem 2.4rem;
+  margin-top: 1rem;
+}
+
+/* === Section Base Styles === */
+section {
+  padding: 4rem 1.5rem;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #fff;
+}
+
+section p {
+  font-size: 1rem;
+  color: #ccc;
+  line-height: 1.6;
+}
+
+/* === Social Proof === */
+.social-proof {
+  background: #1a1a1a;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.proof-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.proof-card {
+  background: #111;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 0 10px rgba(255, 51, 102, 0.1);
+  transition: all 0.3s ease;
+}
+
+.proof-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 20px rgba(255, 51, 102, 0.2);
+}
+
+.proof-card h3 {
+  color: #ff3366;
+  margin-bottom: 0.5rem;
+}
+
+/* === Games Section === */
+.games-section {
+  background: linear-gradient(180deg, #0e0e0e, #1b1b1b 100%);
+}
+
+.games-section h3 {
+  color: #ff3366;
+  margin-top: 1.5rem;
+  font-size: 1.3rem;
+}
+
+.offer-text {
+  margin: 2rem 0 1.5rem;
+  font-weight: 500;
+  color: #eee;
+}
+
+.bonus-list {
+  list-style: none;
+  text-align: left;
+  margin: 0 auto 2rem;
+  max-width: 600px;
+  padding: 0;
+}
+
+.bonus-list li {
+  margin: 0.5rem 0;
+  padding-left: 1.2rem;
   position: relative;
 }
 
-/* Floating avatars */
-.avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+.bonus-list li::before {
+  content: "•";
   position: absolute;
-  border: 3px solid #fff; /* keep white border */
-  object-fit: cover;
-  box-shadow: 0 5px 15px rgba(255,255,255,0.2);
+  left: 0;
+  color: #ff3366;
 }
 
-.avatar1 { top: 0; left: 20%; }
-.avatar2 { top: 10%; right: 20%; }
-.avatar3 { bottom: 10%; left: 25%; }
-.avatar4 { bottom: 5%; right: 25%; }
+/* === Testimonials === */
+.testimonials {
+  background: #141414;
+}
 
+.testimonial-text {
+  font-style: italic;
+  margin: 2rem 0;
+  color: #eee;
+  line-height: 1.6;
+}
 
-.cta-button {
-  background: var(--primary-white); /* Pink button */
-  color: var(--primary-black);        /* White text */
-  padding: 15px 30px;
-  border-radius: 30px;
-  border: none;
-  cursor: pointer;
+/* === About === */
+.about-section {
+  background: #1a1a1a;
+}
+
+/* === FAQ === */
+.faq-section {
+  background: #0e0e0e;
+}
+
+.faq-item {
+  background: #161616;
+  margin: 1rem 0;
+  border-radius: 1rem;
+  padding: 1.2rem 1.5rem;
+  text-align: left;
+  box-shadow: 0 0 10px rgba(255, 51, 102, 0.1);
+}
+
+.faq-item h4 {
+  color: #ff3366;
+  margin-bottom: 0.5rem;
   font-size: 1.1rem;
+}
+
+/* === Footer === */
+.footer {
+  background: linear-gradient(90deg, #ff3366, #ff0048);
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.footer p {
+  margin-top: 1rem;
+  color: #fff;
   font-weight: 600;
-  margin-top: 20px;
-  text-decoration: none;
+}
+
+/* === Utility === */
+.verify {
+  color: #ff3366;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* === Responsive === */
+@media (min-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-section {
+    flex-direction: row;
+    text-align: left;
+    justify-content: space-between;
+    padding: 8rem 5rem 6rem;
+  }
+
+  .hero-text {
+    flex: 1;
+    padding-right: 2rem;
+  }
+
+  .hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero-image img {
+    width: 350px;
+  }
 }

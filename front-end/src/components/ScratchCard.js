@@ -4,13 +4,20 @@ import "../components/ScratchCard.css";
 import Rules from "./Rules";
 import MenuBar from "./MenuBar";
 import { Heart } from "lucide-react";
-import { getFirestore, doc, updateDoc, arrayUnion, collection, getDocs } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  updateDoc,
+  arrayUnion,
+  collection,
+  getDocs,
+} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 export default function ScratchCardScreen({
   coverImage,
-  width = 300,
-  height = 300,
+  width = 500,
+  height = 500,
   revealThreshold = 0.6,
 }) {
   const canvasRef = useRef(null);
@@ -18,46 +25,42 @@ export default function ScratchCardScreen({
   const [lastPoint, setLastPoint] = useState(null);
   const [finished, setFinished] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
-
+  const [isCoverLoaded, setIsCoverLoaded] = useState(false);
+  const [isRevealLoaded, setIsRevealLoaded] = useState(false);
   const [revealImage, setRevealImage] = useState(null);
 
-  // 🔥 Fetch random image from Firestore
-useEffect(() => {
-  const fetchRandomImage = async () => {
-    try {
-      const db = getFirestore();
-      const snapshot = await getDocs(collection(db, "positions"));
+  // 🧠 Helper: both images must be loaded
+  const isGameReady = isCoverLoaded && isRevealLoaded;
 
-      if (!snapshot.empty) {
-        // Collect all imageUrls into an array
-        const urls = snapshot.docs
-          .map((doc) => doc.data().imageUrl)
-          .filter((url) => url); // remove undefined/null
-
-        if (urls.length > 0) {
-          // Pick one at random
-          const randomIndex = Math.floor(Math.random() * urls.length);
-          setRevealImage(urls[randomIndex]);
-        } else {
-          console.warn("No imageUrl fields found in positions docs");
-          setRevealImage(null);
-        }
-      } else {
-        console.warn("No documents found in positions collection");
-        setRevealImage(null);
-      }
-    } catch (err) {
-      console.error("Error fetching positions:", err);
-      setRevealImage(null);
-    }
-  };
-
-  fetchRandomImage();
-}, []);
-
-
-  // Initialize canvas (same as before)
+  // 🔥 Fetch random reveal image from Firestore
   useEffect(() => {
+    const fetchRandomImage = async () => {
+      try {
+        const db = getFirestore();
+        const snapshot = await getDocs(collection(db, "positions"));
+
+        if (!snapshot.empty) {
+          const urls = snapshot.docs
+            .map((doc) => doc.data().imageUrl)
+            .filter(Boolean);
+
+          if (urls.length > 0) {
+            const randomIndex = Math.floor(Math.random() * urls.length);
+            setRevealImage(urls[randomIndex]);
+          }
+        }
+      } catch (err) {
+        console.error("Error fetching positions:", err);
+      }
+    };
+
+    fetchRandomImage();
+  }, []);
+
+  // 🧩 Load cover image into canvas
+  useEffect(() => {
+    if (!coverImage) return;
+
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     const scale = window.devicePixelRatio || 1;
@@ -69,15 +72,30 @@ useEffect(() => {
     ctx.scale(scale, scale);
 
     const img = new Image();
-    img.src = coverImage;
+
     img.onload = () => {
-      ctx.fillStyle = "#0c0c0c";
-      ctx.fillRect(0, 0, width, height);
+      ctx.clearRect(0, 0, width, height);
       ctx.drawImage(img, 0, 0, width, height);
+      setIsCoverLoaded(true);
     };
+
+    img.onerror = () => {
+      console.error("Failed to load cover image:", coverImage);
+    };
+
+    img.src = coverImage;
   }, [coverImage, width, height]);
 
-  // Scratch functions stay the same
+  // 🖼️ When reveal image fully loads
+  useEffect(() => {
+    if (!revealImage) return;
+    const img = new Image();
+    img.onload = () => setIsRevealLoaded(true);
+    img.onerror = () => console.error("Failed to load reveal image:", revealImage);
+    img.src = revealImage;
+  }, [revealImage]);
+
+  // 🖌️ Scratch logic
   const getPos = (e) => {
     const rect = canvasRef.current.getBoundingClientRect();
     const client = e.touches ? e.touches[0] : e;
@@ -85,7 +103,7 @@ useEffect(() => {
   };
 
   const startScratch = (e) => {
-    if (finished) return;
+    if (!isGameReady || finished) return; // 🚫 guard
     setIsDrawing(true);
     setLastPoint(getPos(e));
   };
@@ -98,7 +116,8 @@ useEffect(() => {
   };
 
   const scratch = (e) => {
-    if (!isDrawing || finished) return;
+    if (!isGameReady || !isDrawing || finished) return;
+
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     const pos = getPos(e);
@@ -136,7 +155,7 @@ useEffect(() => {
     }
   };
 
-  // 🔥 Add to favorites in Firebase
+  // 💖 Add to favorites
   const addToFavorites = async () => {
     try {
       const auth = getAuth();
@@ -161,70 +180,69 @@ useEffect(() => {
 
   return (
     <div className="ScratchScreen">
+      <h1>Raspe e realize</h1>
+
       <div className="ScratchScreen_Content">
-          <Rules
-            gameName="Raspe e realize"
-            rulesText={`1. Raspe com o dedo.
-          2. Revele a posição escondida.
-          3. Faça a posição com o seu parceiro (a)`}
+        <Rules
+          gameName="Raspe e realize"
+          rulesText={`1. Raspe com o dedo.\n2. Revele a posição escondida.\n3. Faça a posição com o seu parceiro (a).`}
+        />
+
+        <div className="ScratchCard_Container" style={{ position: "relative" }}>
+          {/* 🖼️ Reveal image */}
+          {revealImage && (
+            <img
+              src={revealImage}
+              alt="Revealed"
+              className="reveal-image"
+              style={{
+                width: `150px`,
+                height: `150px`,
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                borderRadius: "50%",
+                zIndex: 1,
+                objectFit: "cover",
+                clipPath: "circle(50% at 50% 50%)",
+              }}
+            />
+          )}
+
+          {!isGameReady && (
+            <div>
+              
+          
+            </div>
+          )}
+
+          {/* 🎨 Scratch canvas */}
+          <canvas
+            ref={canvasRef}
+            width={width}
+            height={height}
+            className={`scratch-canvas ${fadeOut ? "fade-out" : ""}`}
+            onMouseDown={startScratch}
+            onMouseUp={stopScratch}
+            onMouseMove={scratch}
+            onMouseLeave={stopScratch}
+            onTouchStart={startScratch}
+            onTouchEnd={stopScratch}
+            onTouchMove={scratch}
+            style={{
+              zIndex: 2,
+              borderRadius: "50%",
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              pointerEvents: isGameReady ? "auto" : "none", // 🧠 no interaction early
+            }}
           />
-<div className="ScratchCard_Container" style={{ position: "relative" }}>
-  {revealImage && (
-    <>
-      {/* Stronger black radial gradient */}
-      <div
-        style={{
-          width: `${width}px`,
-          height: `${height}px`,
-          position: "absolute",
-          top: 0,
-          left: 0,
-          borderRadius: "50%",
-          background: `radial-gradient(circle, white 10%, black 80%, black 90%, black 100%)`,
-          zIndex: 0,
-          effects: "blur(20px)",
-          pointerEvents: "none",
-        }}
-      />
+        </div>
 
-      {/* Revealed image */}
-      <img
-        src={revealImage}
-        alt="Revealed"
-        className="reveal-image"
-        style={{
-          width: `${width}px`,
-          height: `${height}px`,
-          position: "absolute",
-          top: 0,
-          left: 0,
-          borderRadius: "50%",
-          zIndex: 1,
-          objectFit: "cover",
-          clipPath: "circle(50% at 50% 50%)",
-        }}
-      />
-    </>
-  )}
-
-  {/* Scratch canvas */}
-  <canvas
-    ref={canvasRef}
-    width={width}
-    height={height}
-    className={`scratch-canvas ${fadeOut ? "fade-out" : ""}`}
-    onMouseDown={startScratch}
-    onMouseUp={stopScratch}
-    onMouseMove={scratch}
-    onMouseLeave={stopScratch}
-    onTouchStart={startScratch}
-    onTouchEnd={stopScratch}
-    onTouchMove={scratch}
-    style={{ zIndex: 2, borderRadius: "50%" }}
-  />
-</div>
-
-            
+        {/* 🔘 Buttons */}
         <div className="Scratch_Buttons">
           <NavLink to="/sex" className="Scratch_Button">
             Realizar
@@ -236,6 +254,7 @@ useEffect(() => {
             <Heart size={20} />
           </div>
         </div>
+
         <MenuBar />
       </div>
     </div>

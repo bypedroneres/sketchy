@@ -1,7 +1,17 @@
 .ScratchScreen {
   display: flex;
   height: 100vh;
+  flex-direction: column;
 }
+
+.ScratchScreen > h1 {
+  color: var(--primary-white);
+  position: fixed;
+  font-weight: 500;
+  font-size: 1.5rem;
+  top: 8rem;
+}
+
 
 .Scratch_Buttons {
   display: flex;

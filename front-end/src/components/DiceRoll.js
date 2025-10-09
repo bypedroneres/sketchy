@@ -6,18 +6,18 @@ import Rules from "./Rules";
 
 // Lados dos dados para o jogo
 const acoes = [
-  "Beijo lento",
-  "Tocar suavemente",
+  "Beijar",
+  "Tocar",
   "Lamber",
   "Massagear",
-  "foder",
-  "Morder levemente"
+  "Rocar",
+  "Morder"
 ];
 
 const partes = [
   "Pescoço",
   "Lábios",
-  "Coxa interna",
+  "Coxa",
   "Peito",
   "Mãos",
   "Costas"
@@ -92,6 +92,7 @@ export default function Dice3DGame() {
 
   return (
     <div className="dice-container">
+      <h1>Toque na tela</h1>
       <MenuBar />
           <Rules
             gameName="Raspe e realize"

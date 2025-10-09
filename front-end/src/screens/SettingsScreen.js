@@ -4,7 +4,7 @@ import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import './SettingsScreen.css';
-import Plans from '../components/Plans';
+// import Plans from '../components/Plans';
 
 function SettingsScreen() {
   const [user, setUser] = useState(null);
@@ -46,7 +46,7 @@ function SettingsScreen() {
       <button className="LogoutButton" onClick={handleLogout}>
         Logout
       </button>
-      <Plans />
+      {/* <Plans /> */}
     </div>
   );
 }
